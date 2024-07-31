@@ -43,7 +43,6 @@ def python_exec():
 
 
 def installModule(packageName):
-
     try:
         subprocess.call([python_exec, "import ", packageName])
     except (Exception):
@@ -56,10 +55,13 @@ def installModule(packageName):
         subprocess.call([python_exe, "-m", "pip", "install", packageName])
         # Check repo if you run into any issues
 
+with open("./import.txt", 'r') as file:
     if python_exec() not in sys.path:
         sys.path.append(python_exec())
-
-
-with open("./import.txt", 'r') as file:
-    packages = file.read().splitlines()
+    try:
+        packages = file.read().splitlines()
+    except Exception:
+        print("Could not open file--Setting packages to install as empty")
+        packages = []
+    
     [installModule(package) for package in packages]
