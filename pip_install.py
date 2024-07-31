@@ -56,6 +56,9 @@ def installModule(packageName):
         subprocess.call([python_exe, "-m", "pip", "install", packageName])
         # Check repo if you run into any issues
 
+    if python_exec() not in sys.path:
+        sys.path.append(python_exec())
+
 
 with open("./import.txt", 'r') as file:
     packages = file.read().splitlines()
